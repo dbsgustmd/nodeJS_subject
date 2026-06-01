@@ -1,23 +1,12 @@
-export const CATEGORY_MAP = {
-  'Entertainment': '엔터테인먼트',
-  'Utilities': '공과금',
-  'Software': '소프트웨어',
-  'Education': '교육',
-  'Health': '건강',
-  'Food': '음식',
-  'Finance': '금융',
-  'Other': '기타'
-};
-
-export const REVERSE_CATEGORY_MAP = Object.entries(CATEGORY_MAP).reduce((acc, [key, value]) => {
-  acc[value] = key;
-  return acc;
-}, {});
+const CATEGORIES_EN = ['Entertainment', 'Utilities', 'Software', 'Education', 'Health', 'Food', 'Finance', 'Other'];
+const CATEGORIES_KO = ['엔터테인먼트', '공과금', '소프트웨어', '교육', '건강', '음식', '금융', '기타'];
 
 export const getKoreanCategory = (englishCategory) => {
-  return CATEGORY_MAP[englishCategory] || englishCategory;
+  const index = CATEGORIES_EN.indexOf(englishCategory);
+  return index !== -1 ? CATEGORIES_KO[index] : englishCategory;
 };
 
 export const getEnglishCategory = (koreanCategory) => {
-  return REVERSE_CATEGORY_MAP[koreanCategory] || koreanCategory;
+  const index = CATEGORIES_KO.indexOf(koreanCategory);
+  return index !== -1 ? CATEGORIES_EN[index] : 'Other';
 };
