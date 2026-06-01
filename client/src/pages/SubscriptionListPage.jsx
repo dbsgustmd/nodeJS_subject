@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import SubscriptionList from '../components/SubscriptionList';
 import { Plus, Search, Filter } from 'lucide-react';
+import { getKoreanCategory } from '../utils/categoryMapping';
 
 const SubscriptionListPage = () => {
   const [subscriptions, setSubscriptions] = useState([]);
@@ -16,7 +17,12 @@ const SubscriptionListPage = () => {
     try {
       setLoading(true);
       const { data } = await api.get('/subscriptions');
-      setSubscriptions(data);
+      // Map categories to Korean
+      const mappedData = data.map(sub => ({
+        ...sub,
+        category: getKoreanCategory(sub.category)
+      }));
+      setSubscriptions(mappedData);
     } catch (error) {
       console.error('Failed to fetch subscriptions', error);
     } finally {

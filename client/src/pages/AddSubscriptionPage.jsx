@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { ArrowLeft, Save, PlusCircle, Check, X } from 'lucide-react';
+import { getEnglishCategory, getKoreanCategory } from '../utils/categoryMapping';
 
 const CATEGORIES = ['엔터테인먼트', '공과금', '소프트웨어', '교육', '건강', '음식', '금융', '기타'];
 
@@ -32,6 +33,7 @@ const AddSubscriptionPage = () => {
           if (subscription) {
             setFormData({
               ...subscription,
+              category: getKoreanCategory(subscription.category),
               nextBillingDate: subscription.nextBillingDate.split('T')[0],
             });
           } else {
@@ -55,6 +57,7 @@ const AddSubscriptionPage = () => {
       const payload = {
         ...formData,
         price: parseFloat(formData.price),
+        category: getEnglishCategory(formData.category),
       };
 
       if (isEdit) {

@@ -11,7 +11,7 @@ const SpendingChart = ({ data }) => {
   if (chartData.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-64 text-slate-400">
-        <p>No data to visualize yet.</p>
+        <p>시각화할 데이터가 아직 없습니다.</p>
       </div>
     );
   }
@@ -34,7 +34,7 @@ const SpendingChart = ({ data }) => {
             ))}
           </Pie>
           <Tooltip 
-            formatter={(value) => `$${value.toFixed(2)}`}
+            formatter={(value) => `${value.toLocaleString()}원`}
             contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
           />
           <Legend />

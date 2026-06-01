@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import SpendingChart from '../components/SpendingChart';
 import { Wallet, PieChart as PieChartIcon, TrendingDown, ArrowRight, Activity } from 'lucide-react';
+import { getKoreanCategory } from '../utils/categoryMapping';
 
 const DashboardPage = () => {
   const [stats, setStats] = useState({ totalMonthly: 0, categoryStats: {} });
@@ -17,7 +18,17 @@ const DashboardPage = () => {
           api.get('/subscriptions/stats')
         ]);
         setSubscriptionCount(subsRes.data.length);
-        setStats(statsRes.data);
+        
+        // Map category stats keys to Korean
+        const mappedCategoryStats = {};
+        Object.entries(statsRes.data.categoryStats).forEach(([key, value]) => {
+          mappedCategoryStats[getKoreanCategory(key)] = value;
+        });
+
+        setStats({
+          ...statsRes.data,
+          categoryStats: mappedCategoryStats
+        });
       } catch (error) {
         console.error('Failed to fetch dashboard data', error);
       } finally {
